@@ -118,6 +118,7 @@ resource "aws_iam_role_policy" "ec2_ecr_access_iam_role_policy" {
   })
 }
 
+## Instance profile para o EC2
 resource "aws_iam_instance_profile" "ec2_ecr_access_iam_instance_profile" {
   name = "ec2_ecr_access_iam_instance_profile"
   role = aws_iam_role.ec2_ecr_access_iam_role.name
