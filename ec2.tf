@@ -131,4 +131,5 @@ resource "aws_instance" "devops_infra_ec2" {
   key_name               = aws_key_pair.devops_infra_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.devops_infra_ec2_security_group.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_ecr_access_iam_instance_profile.name
+  user_data              = file("user_data.sh")
 }
