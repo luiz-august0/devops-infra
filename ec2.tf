@@ -18,7 +18,7 @@ data "aws_ami" "ubuntu" {
 ## Cria o par de chaves
 resource "aws_key_pair" "devops_infra_key_pair" {
   key_name   = "devops_infra_key_pair"
-  public_key = file(pathexpand("~/.ssh/devops-infra.pub"))
+  public_key = var.ssh_public_key
 }
 
 ## Busca a VPC padrão
