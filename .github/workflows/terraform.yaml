@@ -4,7 +4,19 @@ on:
   workflow_dispatch: # Trigger manual
     inputs:
       apply:
-        description: "Aplicar mudanças?"
+        description: "Aplicar?"
+        required: true
+        default: false
+        type: boolean
+
+      plan_destroy:
+        description: "Planejar destruição?"
+        required: true
+        default: false
+        type: boolean
+
+      destroy:
+        description: "Destruir?"
         required: true
         default: false
         type: boolean
@@ -38,8 +50,16 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=tfplan.tfout
 
       - name: Terraform Apply
         if: github.event.inputs.apply == 'true'
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve tfplan.tfout
+
+      - name: Plan Terraform Destroy
+        if: github.event.inputs.plan_destroy == 'true'
+        run: terraform plan -destroy -out=tfplan.tfout
+
+      - name: Terraform Destroy
+        if: github.event.inputs.destroy == 'true'
+        run: terraform apply -destroy -auto-approve tfplan.tfout
